@@ -3,6 +3,7 @@ import Navbar from "../Shared/Navbar/Navbar";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
 import { FaGoogle } from "react-icons/fa";
+import Footer from "../Shared/Footer/Footer";
 
 const Login = () => {
   const { loginUser, googleLogin } = useContext(AuthContext);
@@ -37,7 +38,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="container mx-auto">
       <Navbar></Navbar>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content md:w-full">
@@ -90,6 +91,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 };
