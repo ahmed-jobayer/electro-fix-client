@@ -39,7 +39,7 @@ const Navbar = () => {
   const Dashboard = (
     <>
       <li>
-        <NavLink>
+        <NavLink to='/addServices'>
           Add Service
         </NavLink>
       </li>

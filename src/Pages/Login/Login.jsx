@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
@@ -8,6 +8,7 @@ import Footer from "../Shared/Footer/Footer";
 const Login = () => {
   const { loginUser, googleLogin } = useContext(AuthContext);
   const navigate = useNavigate()
+  const location = useLocation()
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -17,7 +18,7 @@ const Login = () => {
     loginUser(email, password)
       .then(() => {
         alert("login successfull");
-        navigate('/')
+        navigate( location?.state ? location.state : '/')
       })
       .catch((error) => {
         alert(error.message);
@@ -32,7 +33,7 @@ const Login = () => {
     googleLogin()
       .then(() => {
         alert("google login successful");
-        navigate('/')
+        navigate(location?.state ? location.state : '/')
       })
       .catch((error) => {
         console.log(error.message);
