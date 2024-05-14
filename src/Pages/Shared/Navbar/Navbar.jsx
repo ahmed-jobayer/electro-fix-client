@@ -7,7 +7,19 @@ import { AuthContext } from "../../../Providers/AuthProviders";
 
 const Navbar = () => {
 
-    const {user} = useContext(AuthContext)
+    const {user, signOutUser} = useContext(AuthContext)
+
+    const handleSignOut = e => {
+      e.preventDefault()
+      signOutUser()
+      .then(() =>{
+        alert('signed out')
+      })
+      .catch((error) => {
+        console.log(error)
+        alert(error.message)
+      })
+    }
     
   const options = (
     <> 
@@ -98,16 +110,16 @@ const Navbar = () => {
         user ?  <div className="flex items-center gap-2">
         <div className="avatar">
           <div className="w-10 rounded-full">
-            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            <img src={user.photoURL} />
           </div>
         </div>
-        <NavLink to="/logout">
-          <a className="btn">Log out</a>
+        <NavLink onClick={handleSignOut} className="btn" to="/logout">
+          Log Out
         </NavLink>
       </div>
        :
-      <NavLink to="/login">
-        <a className="btn">Log in</a>
+      <NavLink className="btn" to="/login">
+       Log In
       </NavLink>
        }
       </div>
