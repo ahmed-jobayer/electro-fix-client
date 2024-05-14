@@ -1,22 +1,24 @@
 // import { useContext } from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-// import { AuthContext } from "../../Providers/AuthProviders";
+import { AuthContext } from "../../../Providers/AuthProviders";
+
 
 
 const Navbar = () => {
 
-    // const {user} = useContext(AuthContext)
+    const {user} = useContext(AuthContext)
     
   const options = (
-    <>
+    <> 
       <li>
         <NavLink to="/">
-          <a>Home</a>
+          Home
         </NavLink>
       </li>
       <li>
         <NavLink to="/services">
-          <a>Services</a>
+          Services
         </NavLink>
       </li>
     </>
@@ -26,22 +28,22 @@ const Navbar = () => {
     <>
       <li>
         <NavLink>
-          <a className="w-full">Add Service</a>
+          Add Service
         </NavLink>
       </li>
       <li>
         <NavLink>
-          <a>Manage Service</a>
+          Manage Service
         </NavLink>
       </li>
       <li>
         <NavLink>
-          <a>Booked-Services</a>
+          Booked-Services
         </NavLink>
       </li>
       <li>
         <NavLink>
-          <a>Service-To-Do</a>
+          Service-To-Do
         </NavLink>
       </li>
     </>
@@ -92,7 +94,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end  ">
-       {/* {
+       {
         user ?  <div className="flex items-center gap-2">
         <div className="avatar">
           <div className="w-10 rounded-full">
@@ -107,7 +109,7 @@ const Navbar = () => {
       <NavLink to="/login">
         <a className="btn">Log in</a>
       </NavLink>
-       } */}
+       }
       </div>
     </div>
   );

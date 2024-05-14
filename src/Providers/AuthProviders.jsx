@@ -1,24 +1,56 @@
-// // import {  createContext, useState } from "react";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
+import {  createContext, useEffect, useState } from "react";
+import app from "../Firebase/firebase.config";
 
-// // export const AuthContext = createContext(null)
+export const AuthContext = createContext(null)
 
-
-
-
-// const AuthProviders = ({children}) => {
-
-//     // const [user, setUser] = useState(null)
-//     // const [loading, setLoading] = useState(true)
+const auth = getAuth(app)
 
 
-//     const authInfo = {
-//         // user,
-//         // loading,
-//     }
+const AuthProviders = ({children}) => {
 
-//    return (
-//     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
-//    )
-// };
+    const [user, setUser] = useState(null)
+    const [loading, setLoading] = useState(true)
 
-// export default AuthProviders;
+    // email password login
+    const registerUser = (email, password, displayName, photoURL) => {
+        setLoading(true)
+        return createUserWithEmailAndPassword(auth, email, password)
+        .then(
+            (userCredential) => {
+                return updateProfile(userCredential.user, {
+                    displayName,
+                    photoURL,
+                })
+                .then(() => {
+                    return userCredential
+                })
+
+            }
+        )
+    }
+
+    useEffect(() =>{
+        const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+            console.log('user are live ', currentUser)
+            setUser(currentUser)
+            setLoading(false)
+        })
+        return () => {
+            unSubscribe()
+        }
+    })
+
+
+    const authInfo = {
+        user,
+        loading,
+        registerUser,
+    }
+
+   return (
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+   )
+};
+
+export default AuthProviders;
