@@ -1,7 +1,7 @@
 const Banner = () => {
   return (
     <div
-      className="hero min-h-screen rounded-lg text-orange-200"
+      className="hero min-h-screen rounded-lg my-4"
       style={{
         backgroundImage: "url(https://imgur.com/zphYcRV.png)",
       }}
