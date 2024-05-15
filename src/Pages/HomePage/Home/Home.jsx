@@ -1,5 +1,6 @@
 import Footer from "../../Shared/Footer/Footer";
 import Navbar from "../../Shared/Navbar/Navbar";
+import Banner from "../Banner/Banner";
 
 
 
@@ -7,9 +8,7 @@ const Home = () => {
     return (
         <div className="mx-auto container">
             <Navbar></Navbar>
-            <div className="min-h-screen">
-            this is home
-            </div>
+            <Banner></Banner>
             <Footer></Footer>
         </div>
     );
