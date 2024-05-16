@@ -9,7 +9,7 @@ const ManageServices = () => {
   return (
     <div className="container mx-auto">
         <Navbar></Navbar>
-      <div className="overflow-x-auto min-h-screen">
+      <div className="overflow-x-auto min-h-screen relative z-40 my-8">
         <table className="table">
           {/* head */}
           <thead>
