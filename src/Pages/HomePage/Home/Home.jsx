@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Footer from "../../Shared/Footer/Footer";
 import Navbar from "../../Shared/Navbar/Navbar";
 import Banner from "../Banner/Banner";
@@ -22,6 +23,9 @@ const Home = () => {
           <div className="card-body">
             <h2 className="card-title">New album is released!</h2>
             <p>Click the button to listen on Spotiwhy app.</p>
+            <div className="my-4">
+              <h4>Service Price</h4>
+            </div>
             <div className="flex justify-between">
               <div className="flex items-center gap-3">
                 <div className="avatar">
@@ -36,6 +40,11 @@ const Home = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="flex justify-center my-4">
+          <Link to="/allServices">
+            <button className="btn btn-primary">Show All</button>
+          </Link>
         </div>
         <PopularService></PopularService>
       </div>
