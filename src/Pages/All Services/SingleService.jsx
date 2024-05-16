@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const SingleService = () => {
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl lg:max-w-6xl mx-auto">
@@ -11,8 +13,8 @@ const SingleService = () => {
         <h2 className="card-title">New album is released!</h2>
         <p>Click the button to listen on Spotiwhy app.</p>
         <div className="my-4">
-            <h4 className="mb-2">Service Area</h4>
-            <h4>Service Price</h4>
+          <h4 className="mb-2">Service Area</h4>
+          <h4>Service Price</h4>
         </div>
         <div className="flex justify-between">
           <div className="flex items-center gap-3">
@@ -24,7 +26,9 @@ const SingleService = () => {
             <h3>name</h3>
           </div>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary">View Details</button>
+            <Link to="/serviceDetails">
+              <button className="btn btn-primary">View Details</button>
+            </Link>
           </div>
         </div>
       </div>

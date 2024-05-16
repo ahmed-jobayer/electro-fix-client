@@ -36,14 +36,16 @@ const Home = () => {
                 <h3>name</h3>
               </div>
               <div className="card-actions justify-end">
-                <button className="btn btn-primary">View Details</button>
+                <Link to="/serviceDetails">
+                  <button className="btn btn-primary">View Details</button>
+                </Link>
               </div>
             </div>
           </div>
         </div>
         <div className="flex justify-center my-4">
           <Link to="/allServices">
-            <button className="btn btn-primary">Show All</button>
+            <button className="btn btn-primary">Show All Services</button>
           </Link>
         </div>
         <PopularService></PopularService>
