@@ -8,6 +8,9 @@ import PrivateRoute from "./PrivateRoute";
 import AddServices from "../Pages/Add a Services/AddServices";
 import AllServices from "../Pages/All Services/AllServices";
 import ServiceDetails from "../Pages/Service Details/ServiceDetails";
+import ManageServices from "../Pages/Manage Services/ManageServices";
+import BookedService from "../Pages/Booked Service/BookedService";
+import ServiceToDo from "../Pages/Service To Do/ServiceToDo";
 
 const router = createBrowserRouter([
   {
@@ -27,24 +30,28 @@ const router = createBrowserRouter([
         element: <Register></Register>,
       },
       {
-        path: "/addServices",
-        element: <PrivateRoute><AddServices></AddServices></PrivateRoute>
+        path: "/allServices",
+        element: <AllServices></AllServices>,
       },
       {
-        path: "/allServices",
-        element: <AllServices></AllServices>
+        path: "/addServices",
+        element: <PrivateRoute><AddServices></AddServices></PrivateRoute>,
       },
       {
         path: "/serviceDetails",
-        element: <PrivateRoute><ServiceDetails></ServiceDetails></PrivateRoute>
+        element: <PrivateRoute><ServiceDetails></ServiceDetails></PrivateRoute>,
       },
       {
-        path: "/",
-        element: <Home></Home>,
+        path: "/manageServices",
+        element: <PrivateRoute><ManageServices></ManageServices></PrivateRoute>,
       },
       {
-        path: "/",
-        element: <Home></Home>,
+        path: "/bookedService",
+        element: <PrivateRoute><BookedService></BookedService></PrivateRoute>,
+      },
+      {
+        path: "/ServiceToDo",
+        element: <PrivateRoute><ServiceToDo></ServiceToDo></PrivateRoute>,
       },
       {
         path: '*',
