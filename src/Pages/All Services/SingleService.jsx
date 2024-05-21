@@ -29,7 +29,7 @@ const SingleService = ({service}) => {
             <h3>{service.providerName}</h3>
           </div>
           <div className="card-actions justify-end">
-            <Link to="/serviceDetails">
+            <Link to={`/serviceDetails/${service._id}`}>
               <button className="btn btn-primary">View Details</button>
             </Link>
           </div>
