@@ -1,16 +1,40 @@
+import axios from "axios";
 import Footer from "../Shared/Footer/Footer";
 import Navbar from "../Shared/Navbar/Navbar";
+import { useContext } from "react";
+import { AuthContext } from "../../Providers/AuthProviders";
 
 const AddServices = () => {
+  const { user } = useContext(AuthContext);
+
+  const { displayName, email, photoURL } = user;
+
   const handleAddService = (e) => {
     e.preventDefault();
     const form = e.target;
     const imageUrl = form.elements.imageUrl.value;
     const serviceName = form.elements.serviceName.value;
-    const price = form.elements.price.value;
+    const Price = form.elements.price.value;
     const serviceArea = form.elements.serviceArea.value;
     const description = form.elements.description.value;
-    console.log(imageUrl, serviceName, serviceArea, price, description);
+    const service = {
+      imgURL:imageUrl,
+      serviceName,
+      Price,
+      serviceArea,
+      description,
+      providerEmail:email,
+      providerImage:photoURL,
+      providerName:displayName,
+    };
+    axios.post('http://localhost:5000/services', service)
+    .then((data) =>{
+      console.log(data.data)
+    })
+    .catch(error => {
+      console.error(error.message)
+    })
+    console.log(service);
   };
 
   return (
