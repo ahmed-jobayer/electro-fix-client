@@ -25,7 +25,7 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="/services">Services</NavLink>
+        <NavLink to="/allServices">Services</NavLink>
       </li>
     </>
   );
@@ -72,12 +72,14 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           {options}
-          <li>
+          {
+            user ? <li>
             <details>
               <summary>Dashboard</summary>
               <ul className="p-2 w-40 flex flex-col gap-1">{Dashboard}</ul>
             </details>
-          </li>
+          </li> : <li></li>
+          }
         </ul>
       </div>
       <div className="navbar-end  ">

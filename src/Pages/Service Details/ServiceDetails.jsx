@@ -1,10 +1,16 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import Footer from "../Shared/Footer/Footer";
+import { useContext } from "react";
+import { AuthContext } from "../../Providers/AuthProviders";
+import axios from "axios";
 
 const ServiceDetails = () => {
   const service = useLoaderData();
-  // console.log(service)
+  const { user } = useContext(AuthContext);
+
+  const { email, displayName } = user;
+  // console.log(email, displayName)
 
   const {
     _id,
@@ -15,7 +21,34 @@ const ServiceDetails = () => {
     description,
     providerImage,
     providerName,
+    providerEmail,
   } = service;
+
+  const handleBooking = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const serviceTakingDate = form.elements.serviceTakingDate.value;
+    const specialInstruction = form.elements.specialInstruction.value;
+    const booking = {
+      serviceTakingDate,
+      specialInstruction,
+      currentUserEmail: email,
+      currentUserName: displayName,
+      serviceId: _id,
+      serviceImage: imgURL,
+      serviceName,
+      price: Price,
+      providerName,
+      providerEmail,
+    };
+    axios
+      .post("http://localhost:5000/bookings", booking)
+      .then((data) => {
+        console.log(data.data);
+      })
+      .catch((error) => console.error(error));
+    // console.log(booking);
+  };
 
   return (
     <div>
@@ -46,16 +79,14 @@ const ServiceDetails = () => {
               <h4>Service Price: {Price}</h4>
             </div>
             <div className="card-actions flex justify-center">
-              
-                <button
-                  className="btn btn-primary"
-                  onClick={() =>
-                    document.getElementById("my_modal_1").showModal()
-                  }
-                >
-                  Book Now
-                </button>
-              
+              <button
+                className="btn btn-primary"
+                onClick={() =>
+                  document.getElementById("my_modal_1").showModal()
+                }
+              >
+                Book Now
+              </button>
             </div>
           </div>
         </div>
@@ -64,10 +95,138 @@ const ServiceDetails = () => {
 
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Hello!</h3>
-          <p className="py-4">
-            Press ESC key or click the button below to close
-          </p>
+          <div className="hero bg-base-100">
+            <div className="card shrink-0 w-full shadow-2xl bg-base-100">
+              <form
+                onSubmit={handleBooking}
+                className="card-body grid md:grid-cols-2"
+              >
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">ServiceId</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="_id"
+                    defaultValue={_id}
+                    className="input input-bordered"
+                    readOnly
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text"> Service Name</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="serviceName"
+                    defaultValue={serviceName}
+                    className="input input-bordered"
+                    readOnly
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Service Image</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="imgURL"
+                    defaultValue={imgURL}
+                    className="input input-bordered"
+                    readOnly
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Provider Email</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="providerEmail"
+                    defaultValue={providerEmail}
+                    className="input input-bordered"
+                    readOnly
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Provider Name</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="providerName"
+                    defaultValue={providerName}
+                    className="input input-bordered"
+                    readOnly
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Current User Email</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="email"
+                    defaultValue={email}
+                    className="input input-bordered"
+                    readOnly
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Current User Name</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="displayName"
+                    defaultValue={displayName}
+                    className="input input-bordered"
+                    readOnly
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Service Taking Date</span>
+                  </label>
+                  <input
+                    type="date"
+                    name="serviceTakingDate"
+                    placeholder="Service Taking Date"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Special Instruction</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="specialInstruction"
+                    placeholder="Special Instruction"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Price</span>
+                  </label>
+                  <input
+                    type="number"
+                    name="Price"
+                    placeholder={Price}
+                    className="input input-bordered"
+                    readOnly
+                  />
+                </div>
+                <div className="form-control mt-6">
+                  <button className="btn btn-primary">Book</button>
+                </div>
+              </form>
+            </div>
+          </div>
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
@@ -79,6 +238,6 @@ const ServiceDetails = () => {
       <Footer></Footer>
     </div>
   );
-}; 
+};
 
 export default ServiceDetails;
