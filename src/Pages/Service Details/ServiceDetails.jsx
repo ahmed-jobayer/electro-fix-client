@@ -4,10 +4,13 @@ import Footer from "../Shared/Footer/Footer";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ServiceDetails = () => {
   const service = useLoaderData();
   const { user } = useContext(AuthContext);
+  const notify = (message) => toast(message);
 
   const { email, displayName } = user;
   // console.log(email, displayName)
@@ -45,8 +48,14 @@ const ServiceDetails = () => {
       .post("http://localhost:5000/bookings", booking)
       .then((data) => {
         console.log(data.data);
+        if (data.data.insertedId) {
+          notify("Booking successfull");
+        }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        notify(error.message);
+      });
     // console.log(booking);
   };
 
@@ -63,6 +72,7 @@ const ServiceDetails = () => {
               </div>
             </div>
             <div>
+              PremerPremer
               <h3 className="mb-3">Area: {serviceArea}</h3>
               <h3>Name: {providerName}</h3>
             </div>
@@ -94,10 +104,12 @@ const ServiceDetails = () => {
       {/* Open the modal using document.getElementById('ID').showModal() method */}
 
       <dialog id="my_modal_1" className="modal">
-        <div className="modal-box">
+        <ToastContainer />
+        <div className="modal-box ">
           <div className="hero bg-base-100">
-            <div className="card shrink-0 w-full shadow-2xl bg-base-100">
+            <div className="card shrink-0 w-full shadow-2xl bg-base-100 modal-action">
               <form
+                method="dialog"
                 onSubmit={handleBooking}
                 className="card-body grid md:grid-cols-2"
               >
@@ -224,14 +236,14 @@ const ServiceDetails = () => {
                 <div className="form-control mt-6">
                   <button className="btn btn-primary">Book</button>
                 </div>
+                <div className="modal-action">
+                  <form method="dialog">
+                    {/* if there is a button in form, it will close the modal */}
+                    <button className="btn">Close</button>
+                  </form>
+                </div>
               </form>
             </div>
-          </div>
-          <div className="modal-action">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn">Close</button>
-            </form>
           </div>
         </div>
       </dialog>
