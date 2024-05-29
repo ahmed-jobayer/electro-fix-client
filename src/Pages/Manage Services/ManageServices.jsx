@@ -1,11 +1,28 @@
+import { useEffect, useState } from "react";
 import Footer from "../Shared/Footer/Footer";
 import Navbar from "../Shared/Navbar/Navbar";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import axios from "axios";
 
 
 
 const ManageServices = () => {
+
+  const [bookedServises, setBookedServices] = useState([])
+
+  // const {_id, serviceName, providerName, price } = bookedServises
+
+  useEffect ( () =>{
+    axios.get('http://localhost:5000/bookedServices')
+    .then(data => {
+      setBookedServices(data.data)
+      // console.log(data.data)
+    })
+  } ,[])
+
+  // console.log(_id, serviceName, providerName, price)
+
   return (
     <div className="container mx-auto">
         <Navbar></Navbar>
@@ -23,13 +40,15 @@ const ManageServices = () => {
           </thead>
           <tbody>
             {/* row */}
-            <tr className="hover">
-              <td>Hart Hagerty</td>
-              <td>Desktop Support Technician</td>
-              <td>Purple</td>
-              <td><FaEdit className="text-xl cursor-pointer"/></td>
-              <td><MdDeleteForever className="text-2xl cursor-pointer"/></td>
-            </tr>
+            {bookedServises.map((bookedService) => (
+             <tr key={bookedService._id} className="hover">
+             <td>{bookedService.serviceName}</td>
+             <td>{bookedService.providerName}</td>
+             <td>{bookedService.price}</td>
+             <td><FaEdit className="text-xl cursor-pointer"/></td>
+             <td><MdDeleteForever className="text-2xl cursor-pointer"/></td>
+           </tr>
+            ))}
           </tbody>
         </table>
       </div>

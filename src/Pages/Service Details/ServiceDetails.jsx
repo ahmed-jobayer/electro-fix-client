@@ -103,7 +103,7 @@ const ServiceDetails = () => {
       </div>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
 
-      <dialog id="my_modal_1" className="modal">
+      <dialog id="my_modal_1" className="modal">    
         <ToastContainer />
         <div className="modal-box ">
           <div className="hero bg-base-100">
@@ -234,7 +234,7 @@ const ServiceDetails = () => {
                   />
                 </div>
                 <div className="form-control mt-6">
-                  <button className="btn btn-primary">Book</button>
+                  <button className="btn btn-primary">Purchase</button>
                 </div>
                 <div className="modal-action">
                   <form method="dialog">
