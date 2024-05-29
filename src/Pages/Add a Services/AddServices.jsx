@@ -34,7 +34,7 @@ const AddServices = () => {
     .catch(error => {
       console.error(error.message)
     })
-    console.log(service);
+    // console.log(service);
   };
 
   return (
