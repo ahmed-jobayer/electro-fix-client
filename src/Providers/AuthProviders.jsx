@@ -57,7 +57,7 @@ const AuthProviders = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("user are live ", currentUser);
+      // console.log("user are live ", currentUser);
       setUser(currentUser);
       setLoading(false);
     });
