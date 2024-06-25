@@ -12,7 +12,7 @@ const BookedService = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/bookedServices", {
+      .get("https://electro-fix-server.vercel.app/bookedServices", {
         params: {
           currentUserEmail: currentUserEmail,
         },
@@ -21,7 +21,7 @@ const BookedService = () => {
         setBookedServices(data.data);
         // console.log(data.data)
       });
-  }, [currentUserEmail]);
+  }, [currentUserEmail]); 
 
   return (
     <div className="container mx-auto">

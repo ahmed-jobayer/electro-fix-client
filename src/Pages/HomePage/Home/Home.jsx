@@ -11,7 +11,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/services")
+      .get("https://electro-fix-server.vercel.app/services")
       .then((data) => setServices(data.data.slice(0, 6)));
   }, []);
 

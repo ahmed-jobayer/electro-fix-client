@@ -45,7 +45,7 @@ const ServiceDetails = () => {
       providerEmail,
     };
     axios
-      .post("http://localhost:5000/bookings", booking)
+      .post("https://electro-fix-server.vercel.app/bookings", booking)
       .then((data) => {
         console.log(data.data);
         if (data.data.insertedId) {

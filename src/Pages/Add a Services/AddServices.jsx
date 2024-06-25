@@ -27,7 +27,7 @@ const AddServices = () => {
       providerImage:photoURL,
       providerName:displayName,
     };
-    axios.post('http://localhost:5000/services', service)
+    axios.post('https://electro-fix-server.vercel.app/services', service)
     .then((data) =>{
       console.log(data.data)
     })

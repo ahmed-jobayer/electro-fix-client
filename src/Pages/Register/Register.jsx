@@ -8,7 +8,7 @@ const Register = () => {
     const{registerUser} = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
-
+ 
     const handleRegister = e =>{
         e.preventDefault()
         const form = e.target

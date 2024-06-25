@@ -40,7 +40,7 @@ const router = createBrowserRouter([
       {
         path: "/serviceDetails/:id",
         element: <PrivateRoute><ServiceDetails></ServiceDetails></PrivateRoute>,
-        loader: ({params}) => fetch(`http://localhost:5000/services/${params.id}`)
+        loader: ({params}) => fetch(`https://electro-fix-server.vercel.app/services/${params.id}`)
       },
       {
         path: "/manageServices",

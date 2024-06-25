@@ -17,21 +17,29 @@ const ManageServices = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/bookedServices", {
+      .get("https://electro-fix-server.vercel.app/provider/services", {
         params: {
           currentUserEmail: currentUserEmail,
         },
       })
       .then((data) => {
         setBookedServices(data.data);
-        // console.log(data.data)
+        console.log(data.data)
       });
   }, [currentUserEmail]);
 
+  // update added services
+
+  // const handleUpdate = (_id) => {
+  //   console.log(_id);
+  // };
+
   // console.log(_id, serviceName, providerName, price)
 
+  // delete added services
+
   const handleDelete = (_id) => {
-    console.log(_id);
+    // console.log(_id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -43,7 +51,7 @@ const ManageServices = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/bookedServices/${_id}`)
+          .delete(`https://electro-fix-server.vercel.app/provider/services/${_id}`)
           .then((data) => {
             console.log(data.data);
             if (data.data.deletedCount > 0) {
@@ -78,7 +86,7 @@ const ManageServices = () => {
       {bookedServises.length < 1 ? (
         <>
           <div className="min-h-screen flex items-center justify-center">
-            <h3>You did not booked any services yet</h3>
+            <h3>You did not added any services yet</h3>
           </div>
         </>
       ) : (
@@ -102,7 +110,13 @@ const ManageServices = () => {
                   <td>{bookedService.providerName}</td>
                   <td>{bookedService.price}</td>
                   <td>
-                    <FaEdit className="text-xl cursor-pointer" />
+                    <FaEdit
+                      // onClick={() => handleUpdate(bookedService._id)}
+                      className="text-xl cursor-pointer"
+                      onClick={() =>
+                        document.getElementById("my_modal_2").showModal()
+                      }
+                    />
                   </td>
                   <td>
                     <MdDeleteForever
@@ -116,6 +130,89 @@ const ManageServices = () => {
           </table>
         </div>
       )}
+
+      {/* modal */}
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      <dialog id="my_modal_2" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Hello!</h3>
+          <div className="hero min-h-screen bg-base-200">
+            <div className="card shrink-0 w-5/6 m-4 shadow-2xl bg-base-100 ">
+              <form
+                className="card-body lg:grid lg:gap-6 grid-cols-2"
+              >
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Image URL</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="imageUrl"
+                    placeholder=" Image URL of the Service"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Service Name</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="serviceName"
+                    placeholder="Service Name"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Price</span>
+                  </label>
+                  <input
+                    type="number"
+                    name="price"
+                    placeholder="Price"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Service Area</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="serviceArea"
+                    placeholder="Service Area"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control col-span-2">
+                  <label className="label">
+                    <span className="label-text">Description</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="description"
+                    placeholder="Description"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control mt-6 col-span-2">
+                  <button className="btn btn-primary">Add Service</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
+
       <Footer></Footer>
     </div>
   );

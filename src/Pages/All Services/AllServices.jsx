@@ -8,7 +8,7 @@ const AllServices = () => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/services')
+    axios.get('https://electro-fix-server.vercel.app/services')
     .then(data => setServices(data.data))
   }, []);
 
