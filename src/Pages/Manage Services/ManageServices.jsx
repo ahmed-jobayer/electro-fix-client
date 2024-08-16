@@ -6,35 +6,59 @@ import { MdDeleteForever } from "react-icons/md";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProviders";
+import { Helmet } from "react-helmet-async";
 
 const ManageServices = () => {
-  const [bookedServises, setBookedServices] = useState([]);
+  const [services, setServices] = useState([]);
+  const [editService, setEditService] = useState(null)
 
   const { user } = useContext(AuthContext);
   const currentUserEmail = user.email;
   // console.log(currentUserEmail)
-  // const {_id, serviceName, providerName, price } = bookedServises
+  // const {_id, serviceName, providerName, price } = services
 
   useEffect(() => {
     axios
-      .get("https://electro-fix-server.vercel.app/provider/services", {
+      .get("http://localhost:5000/provider/services", {
         params: {
           currentUserEmail: currentUserEmail,
         },
       })
       .then((data) => {
-        setBookedServices(data.data);
-        console.log(data.data)
+        setServices(data.data);
+        // console.log(data.data)
       });
   }, [currentUserEmail]);
 
+  const handleEditIconClick = (service) =>{
+    setEditService(service)
+    document.getElementById("my_modal_2").showModal()
+  }
+
   // update added services
 
-  // const handleUpdate = (_id) => {
-  //   console.log(_id);
-  // };
+  const handleUpdateService = (_id, form) => {
+    
+    const imageUrl = form.imageUrl.value;
+    const serviceName = form.serviceName.value;
+    const price = form.price.value;
+    const serviceArea = form.serviceArea.value;
+    const description = form.description.value;
+    const service = {
+      imgURL: imageUrl,
+      serviceName,
+      price,
+      serviceArea,
+      description,
+    }
+    console.log(service);
+    axios.patch(`http://localhost:5000/provider/service/${_id}`, service)
+    .then((result) => {
+      console.log(result.data)
+    })
+    .catch((err) => console.log(err))
+  };
 
-  // console.log(_id, serviceName, providerName, price)
 
   // delete added services
 
@@ -51,12 +75,12 @@ const ManageServices = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`https://electro-fix-server.vercel.app/provider/services/${_id}`)
+          .delete(`http://localhost:5000/provider/services/${_id}`)
           .then((data) => {
             console.log(data.data);
             if (data.data.deletedCount > 0) {
-              const remaining = bookedServises.filter(
-                (bookedService) => bookedService._id !== _id
+              const remaining = services.filter(
+                (Service) => Service._id !== _id
               );
 
               Swal.fire({
@@ -64,7 +88,7 @@ const ManageServices = () => {
                 text: "Your file has been deleted.",
                 icon: "success",
               });
-              setBookedServices(remaining);
+              setServices(remaining);
             }
           })
           .catch((error) => {
@@ -78,12 +102,16 @@ const ManageServices = () => {
       }
     });
   };
-  // console.log(bookedServises.length)
+  // console.log(services.length)
 
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>Manage Services - Electro Fix</title>
+      </Helmet>
       <Navbar></Navbar>
-      {bookedServises.length < 1 ? (
+      <h2 className="text-center my-4 text-2xl">SERVICES THAT YOU PROVIDE</h2>
+      {services.length < 1 ? (
         <>
           <div className="min-h-screen flex items-center justify-center">
             <h3>You did not added any services yet</h3>
@@ -104,23 +132,22 @@ const ManageServices = () => {
             </thead>
             <tbody>
               {/* row */}
-              {bookedServises.map((bookedService) => (
-                <tr key={bookedService._id} className="hover">
-                  <td>{bookedService.serviceName}</td>
-                  <td>{bookedService.providerName}</td>
-                  <td>{bookedService.price}</td>
+              {services.map((service) => (
+                <tr key={service._id} className="hover">
+                  <td>{service.serviceName}</td>
+                  <td>{service.providerName}</td>
+                  <td>{service.price}</td>
                   <td>
                     <FaEdit
-                      // onClick={() => handleUpdate(bookedService._id)}
                       className="text-xl cursor-pointer"
                       onClick={() =>
-                        document.getElementById("my_modal_2").showModal()
+                        handleEditIconClick(service)
                       }
                     />
                   </td>
                   <td>
                     <MdDeleteForever
-                      onClick={() => handleDelete(bookedService._id)}
+                      onClick={() => handleDelete(service._id)}
                       className="text-2xl cursor-pointer"
                     />
                   </td>
@@ -135,11 +162,14 @@ const ManageServices = () => {
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       <dialog id="my_modal_2" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Hello!</h3>
           <div className="hero min-h-screen bg-base-200">
             <div className="card shrink-0 w-5/6 m-4 shadow-2xl bg-base-100 ">
               <form
                 className="card-body lg:grid lg:gap-6 grid-cols-2"
+                onSubmit={(e) => {
+                  // e.preventDefault();
+                  handleUpdateService(editService._id, e.target)
+                  }} 
               >
                 <div className="form-control">
                   <label className="label">
@@ -148,7 +178,7 @@ const ManageServices = () => {
                   <input
                     type="text"
                     name="imageUrl"
-                    placeholder=" Image URL of the Service"
+                    defaultValue={editService?.imgURL}
                     className="input input-bordered"
                     required
                   />
@@ -160,7 +190,7 @@ const ManageServices = () => {
                   <input
                     type="text"
                     name="serviceName"
-                    placeholder="Service Name"
+                    defaultValue={editService?.serviceName}
                     className="input input-bordered"
                     required
                   />
@@ -172,7 +202,7 @@ const ManageServices = () => {
                   <input
                     type="number"
                     name="price"
-                    placeholder="Price"
+                    defaultValue={editService?.price}
                     className="input input-bordered"
                     required
                   />
@@ -184,7 +214,7 @@ const ManageServices = () => {
                   <input
                     type="text"
                     name="serviceArea"
-                    placeholder="Service Area"
+                    defaultValue={editService?.serviceArea}
                     className="input input-bordered"
                     required
                   />
@@ -196,13 +226,13 @@ const ManageServices = () => {
                   <input
                     type="text"
                     name="description"
-                    placeholder="Description"
+                    defaultValue={editService?.description}
                     className="input input-bordered"
                     required
                   />
                 </div>
                 <div className="form-control mt-6 col-span-2">
-                  <button className="btn btn-primary">Add Service</button>
+                  <button className="btn btn-primary">Update Service</button>
                 </div>
               </form>
             </div>

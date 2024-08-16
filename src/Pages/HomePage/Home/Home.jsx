@@ -5,18 +5,22 @@ import Banner from "../Banner/Banner";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SingleService from "../../All Services/SingleService";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
     axios
-      .get("https://electro-fix-server.vercel.app/services")
+      .get("http://localhost:5000/services")
       .then((data) => setServices(data.data.slice(0, 6)));
   }, []);
 
   return (
     <div className="mx-auto container">
+      <Helmet>
+        <title>Home - Electro Fix</title>
+      </Helmet>
       <Navbar></Navbar>
       <Banner></Banner>
       <div>

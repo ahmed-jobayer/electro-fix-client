@@ -3,12 +3,13 @@ import Footer from "../Shared/Footer/Footer";
 import Navbar from "../Shared/Navbar/Navbar";
 import SingleService from "./SingleService";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const AllServices = () => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    axios.get('https://electro-fix-server.vercel.app/services')
+    axios.get('http://localhost:5000/services')
     .then(data => setServices(data.data))
   }, []);
 
@@ -16,6 +17,9 @@ const AllServices = () => {
 
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>All Services - Electro Fix</title>
+      </Helmet>
       <Navbar></Navbar>
       <div className="my-6 flex flex-col gap-10">
         <h2 className="text-center my-6 text-3xl">All Services</h2>

@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
 
@@ -30,6 +31,9 @@ const Register = () => {
 
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>Register - Electro Fix</title>
+      </Helmet>
       <Navbar></Navbar>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content md:w-full">

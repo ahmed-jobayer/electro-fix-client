@@ -3,6 +3,7 @@ import Footer from "../Shared/Footer/Footer";
 import Navbar from "../Shared/Navbar/Navbar";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
+import { Helmet } from "react-helmet-async";
 
 const AddServices = () => {
   const { user } = useContext(AuthContext);
@@ -14,31 +15,39 @@ const AddServices = () => {
     const form = e.target;
     const imageUrl = form.elements.imageUrl.value;
     const serviceName = form.elements.serviceName.value;
-    const Price = form.elements.price.value;
+    const price = form.elements.price.value;
     const serviceArea = form.elements.serviceArea.value;
     const description = form.elements.description.value;
     const service = {
-      imgURL:imageUrl,
+      imgURL: imageUrl,
       serviceName,
-      Price,
+      price,
       serviceArea,
       description,
-      providerEmail:email,
-      providerImage:photoURL,
-      providerName:displayName,
+      providerEmail: email,
+      providerImage: photoURL,
+      providerName: displayName,
     };
-    axios.post('https://electro-fix-server.vercel.app/services', service)
-    .then((data) =>{
-      console.log(data.data)
-    })
-    .catch(error => {
-      console.error(error.message)
-    })
+    axios
+      .post("http://localhost:5000/services", service)
+      .then((data) => {
+        console.log(data.data);
+        if (data.data.insertedId) {
+          alert("Service dded Successfully");
+          form.reset();
+        }
+      })
+      .catch((error) => {
+        console.error(error.message); 
+      });
     // console.log(service);
   };
 
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>Add Service - Electro Fix</title>
+      </Helmet>
       <Navbar></Navbar>
       <div className="hero min-h-screen bg-base-200">
         <div className="card shrink-0 w-5/6 m-4 shadow-2xl bg-base-100 ">

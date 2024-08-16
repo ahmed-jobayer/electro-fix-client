@@ -3,16 +3,17 @@ import Footer from "../Shared/Footer/Footer";
 import Navbar from "../Shared/Navbar/Navbar";
 import axios from "axios";
 import { AuthContext } from "../../Providers/AuthProviders";
+import { Helmet } from "react-helmet-async";
 
 const BookedService = () => {
   const [bookedServises, setBookedServices] = useState([]);
-  console.log(bookedServises);
+  // console.log(bookedServises);
   const { user } = useContext(AuthContext);
   const currentUserEmail = user.email;
 
   useEffect(() => {
     axios
-      .get("https://electro-fix-server.vercel.app/bookedServices", {
+      .get("http://localhost:5000/bookedServices", {
         params: {
           currentUserEmail: currentUserEmail,
         },
@@ -25,12 +26,15 @@ const BookedService = () => {
 
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>Booked Services - Electro Fix</title>
+      </Helmet>
       <Navbar></Navbar>
       <h2 className="text-center my-4 text-2xl">Booked Services Information</h2>
       {bookedServises.length < 1 ? (
         <>
           <div className="min-h-screen flex items-center justify-center">
-            <h3>You did not booked any services yet</h3>
+            <h3>You did not booked any service yet</h3>
           </div>
         </>
       ) : (

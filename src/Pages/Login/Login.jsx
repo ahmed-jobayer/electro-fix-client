@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
 import { FaGoogle } from "react-icons/fa";
 import Footer from "../Shared/Footer/Footer";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { loginUser, googleLogin } = useContext(AuthContext);
@@ -43,6 +44,9 @@ const Login = () => {
 
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>Login - Electro Fix</title>
+      </Helmet>
       <Navbar></Navbar>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content md:w-full">

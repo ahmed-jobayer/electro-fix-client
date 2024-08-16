@@ -6,6 +6,7 @@ import { AuthContext } from "../../Providers/AuthProviders";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Helmet } from "react-helmet-async";
 
 const ServiceDetails = () => {
   const service = useLoaderData();
@@ -19,13 +20,14 @@ const ServiceDetails = () => {
     _id,
     imgURL,
     serviceName,
-    Price,
+    price,
     serviceArea,
     description,
     providerImage,
     providerName,
     providerEmail,
   } = service;
+
 
   const handleBooking = (e) => {
     e.preventDefault();
@@ -40,12 +42,12 @@ const ServiceDetails = () => {
       serviceId: _id,
       serviceImage: imgURL,
       serviceName,
-      price: Price,
+      price: price,
       providerName,
       providerEmail,
     };
     axios
-      .post("https://electro-fix-server.vercel.app/bookings", booking)
+      .post("http://localhost:5000/bookings", booking)
       .then((data) => {
         console.log(data.data);
         if (data.data.insertedId) {
@@ -61,6 +63,9 @@ const ServiceDetails = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Service Details - Electro Fix</title>
+      </Helmet>
       <Navbar></Navbar>
       <div className="my-8">
         <h3 className="text-center">Service Provider Information</h3>
@@ -86,7 +91,7 @@ const ServiceDetails = () => {
             <h2 className="card-title">{serviceName}</h2>
             <p>{description}</p>
             <div className="my-4">
-              <h4>Service Price: {Price}</h4>
+              <h4>Service Price: ${price}</h4>
             </div>
             <div className="card-actions flex justify-center">
               <button
@@ -228,7 +233,7 @@ const ServiceDetails = () => {
                   <input
                     type="number"
                     name="Price"
-                    placeholder={Price}
+                    placeholder={price}
                     className="input input-bordered"
                     readOnly
                   />
