@@ -45,6 +45,7 @@ const ServiceDetails = () => {
       price: price,
       providerName,
       providerEmail,
+      status: 'pending'
     };
     axios
       .post("http://localhost:5000/bookings", booking)

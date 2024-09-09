@@ -22,7 +22,7 @@ const SingleService = ({service}) => {
           <div className="flex items-center gap-3">
             <div className="avatar">
               <div className="w-14 rounded-xl">
-                <img src={service.providerImage} />
+                <img src={service.providerImage} alt={service.providerName}/>
               </div>
             </div>
             <h3>{service.providerName}</h3>

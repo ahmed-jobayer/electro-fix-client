@@ -6,6 +6,7 @@ import { FaBarsStaggered } from "react-icons/fa6";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
+  console.log(user)
 
   const handleSignOut = (e) => {
     e.preventDefault();
@@ -87,7 +88,7 @@ const Navbar = () => {
           <div className="flex items-center gap-2">
             <div className="avatar">
               <div className="w-10 rounded-full">
-                <img src={user.photoURL} />
+                <img src={user.photoURL} alt={user.displayName} />
               </div>
             </div>
             <NavLink onClick={handleSignOut} className="btn" to="/logout">
